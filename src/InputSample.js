@@ -1,18 +1,43 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 
 function InputSample() {
-  const [text, setText] = React.useState("");
+  const [inputs, setInputs] = useState({
+    name: "",
+    nickname: "",
+  });
+  const { name, nickname } = inputs;
+  const nameInput = useRef();
 
   const onChange = (e) => {
-    setText(e.target.value);
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
   };
-  const onReset = () => setText("");
+  const onReset = () => {
+    setInputs({
+      ...inputs,
+      name: "",
+      nickname: "",
+    });
+    nameInput.current.focus();
+  };
   return (
     <div>
-      <input onChange={onChange} />
+      <input name="name" placeholder="이름" onChange={onChange} value={name} />
+      <input
+        name="nickname"
+        placeholder="닉네임"
+        onChange={onChange}
+        vlaue={nickname}
+        ref={nameInput}
+      />
       <button onClick={onReset}>초기화</button>
       <div>
-        <b>값 : {text}</b>
+        <b>
+          값 : {name} {nickname}
+        </b>
       </div>
     </div>
   );
