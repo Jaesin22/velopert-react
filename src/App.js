@@ -89,12 +89,9 @@ function App() {
 
 export default App;
 
-// React.memo 를 사용한 컴포넌트 리렌더링 방지
-// 사용방법 : (1) export default React.memo(함수);
-// (2) const User = React.memo(function User({ user, onRemove, onToggle }) {
+// Context API를 사용한 전역 값 관리
+// 특정 함수를 특정 컴포넌트를 거쳐서 원하는 컴포넌트에게 전달하는 작업은 리액트로 개발을 하다보면 자주 발생 할 수 있는 작업임.
+// 그럴 땐, 리액트의 Context API 와 이전 섹션에서 배웠던 dispatch 를 함께 사용하면 이러한 복잡한 구조를 해결 할 수 있다.
 
-// User 리랜더링 막기
-// User 중 하나라도 수정하면 모든 User 들이 리렌더링되고, CreateUser 도 리렌더링이 된다.
-// 이유는 users 배열이 바뀔때마다 onCreate 도 새로 만들어지고, onToggle,onRemove 도 새로 만들어지기 때문
-// deps 에 users 가 들어있기 때문에 배열이 바뀔때마다 함수가 새로 만들어지는건, 당연
-// 함수형 업데이트를 하게 되면 setUsers 에 등록하는 콜백함수의 파라미터에서 최신 users 를 참조 할 수 있기 때문에 deps 에 users 를 넣지 않아도 됨
+// 리액트의 Context API를 사용하면, 프로젝트 안에서 전역적으로 사용할 수 있는 값을 관리할 수 있다.
+// 예시 : const UserDispatch = React.createContext(null);
