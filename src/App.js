@@ -115,7 +115,13 @@ function App() {
   return (
     <div className="App">
       <div className="buttons">
-        <Button size="large">BUTTON</Button>
+        <Button
+          size="large"
+          onClick={() => console.log("클릭되따")}
+          onMouseMove={() => console.log("무브무브")}
+        >
+          BUTTON
+        </Button>
         <Button>BUTTON</Button>
         <Button size="small">BUTTON</Button>
       </div>
@@ -129,11 +135,13 @@ function App() {
         </Button>
       </div>
       <div className="buttons">
-        <Button size="large" color="pink">
+        <Button size="large" color="gray" outline fullWidth>
           BUTTON
         </Button>
-        <Button color="pink">BUTTON</Button>
-        <Button size="small" color="pink">
+        <Button size="large" color="pink" outline={false} fullWidth>
+          BUTTON
+        </Button>
+        <Button size="large" color="pink" outline fullWidth>
           BUTTON
         </Button>
       </div>
