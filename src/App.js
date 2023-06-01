@@ -108,44 +108,24 @@
 // // 예시 : const UserDispatch = React.createContext(null);
 
 import React from "react";
-import "./App.scss";
-import Button from "./components/Button";
+import CheckBox from "./components/CheckBox";
 
 function App() {
+  const [check, setCheck] = React.useState(false);
+  const onChange = (e) => {
+    setCheck(e.target.checked);
+  };
   return (
-    <div className="App">
-      <div className="buttons">
-        <Button
-          size="large"
-          onClick={() => console.log("클릭되따")}
-          onMouseMove={() => console.log("무브무브")}
-        >
-          BUTTON
-        </Button>
-        <Button>BUTTON</Button>
-        <Button size="small">BUTTON</Button>
-      </div>
-      <div className="buttons">
-        <Button size="large" color="gray">
-          BUTTON
-        </Button>
-        <Button color="gray">BUTTON</Button>
-        <Button size="small" color="gray">
-          BUTTON
-        </Button>
-      </div>
-      <div className="buttons">
-        <Button size="large" color="gray" outline fullWidth>
-          BUTTON
-        </Button>
-        <Button size="large" color="pink" outline={false} fullWidth>
-          BUTTON
-        </Button>
-        <Button size="large" color="pink" outline fullWidth>
-          BUTTON
-        </Button>
-      </div>
+    <div>
+      <CheckBox onChange={onChange} checked={check}>
+        다음 약관에 모두 동의
+      </CheckBox>
+      <p>
+        <b>check :</b>
+        {check ? "true" : "false"}
+      </p>
     </div>
   );
 }
+
 export default App;
