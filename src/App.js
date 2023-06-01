@@ -108,23 +108,22 @@
 // // 예시 : const UserDispatch = React.createContext(null);
 
 import React from "react";
-import CheckBox from "./components/CheckBox";
+import styled, { css } from "styled-components";
+import Button from "./components/Button";
+
+const AppBlock = styled.div`
+  width: 512px;
+  margin: 0 auto;
+  margin-top: 4rem;
+  border: 1px solid black;
+  padding: 1rem;
+`;
 
 function App() {
-  const [check, setCheck] = React.useState(false);
-  const onChange = (e) => {
-    setCheck(e.target.checked);
-  };
   return (
-    <div>
-      <CheckBox onChange={onChange} checked={check}>
-        다음 약관에 모두 동의
-      </CheckBox>
-      <p>
-        <b>check :</b>
-        {check ? "true" : "false"}
-      </p>
-    </div>
+    <AppBlock>
+      <Button>BUTTON</Button>
+    </AppBlock>
   );
 }
 

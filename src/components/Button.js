@@ -1,21 +1,39 @@
 import React from "react";
-import classNames from "classnames";
-import "./Button.scss";
+import styled from "styled-components";
 
-function Button({ children, size, color, outline, fullWidth, ...rest }) {
-  return (
-    <button
-      className={classNames("Button", size, color, { outline, fullWidth })}
-      {...rest}
-    >
-      {children}
-    </button>
-  );
+const StyledButton = styled.button`
+  /* 공통 스타일 */
+  display: inline-flex;
+  ontline: none;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  paddint-left: 1rem;
+  padding-right: 1rem;
+
+  /* 크기 */
+  height: 2.25rem;
+  font-size: 1rem;
+
+  /* 색상 */
+  background: #228be6;
+  &:hover {
+    background: #339af0;
+  }
+  &:active {
+    background: #1c7ed6;
+  }
+
+  /* 기타 */
+  & + & {
+    margin-left: 1rem;
+  }
+`;
+
+function Button({ children, ...rest }) {
+  return <StyledButton {...rest}>{children}</StyledButton>;
 }
-
-Button.defaultProps = {
-  size: "medium",
-  color: "blue",
-};
 
 export default Button;
