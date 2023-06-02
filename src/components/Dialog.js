@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
 
-const dackBackground = styled.div`
+const DarkBackground = styled.div`
   position: fixed;
   left: 0;
   top: 0;
@@ -11,3 +11,46 @@ const dackBackground = styled.div`
   display: flex;
   align-items: center;
 `;
+
+const DialogBlack = styled.div`
+  width: 320px;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 2px;
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 1.125rem;
+  }
+`;
+
+const ButtonGroup = styled.div`
+  margin-top: 3rem;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+function Dialog({ title, children, confirmText, cancelText }) {
+  return (
+    <DarkBackground>
+      <DialogBlack>
+        <h3>{title}</h3>
+        <p>{children}</p>
+        <ButtonGroup>
+          <Button color="gray">{cancelText}</Button>
+          <Button color="pink">{confirmText}</Button>
+        </ButtonGroup>
+      </DialogBlack>
+    </DarkBackground>
+  );
+}
+
+Dialog.defaultProps = {
+  confirmText: "확인",
+  cancelText: "취소",
+};
+
+export default Dialog;
