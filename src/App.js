@@ -108,7 +108,7 @@
 // // 예시 : const UserDispatch = React.createContext(null);
 
 import React from "react";
-import styled, { css } from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import Button from "./components/Button";
 
 const AppBlock = styled.div`
@@ -119,11 +119,53 @@ const AppBlock = styled.div`
   padding: 1rem;
 `;
 
+const ButtonGroup = styled.div`
+  & + & {
+    margin-top: 1rem;
+  }
+`;
+
 function App() {
   return (
-    <AppBlock>
-      <Button>BUTTON</Button>
-    </AppBlock>
+    <ThemeProvider
+      theme={{
+        palette: {
+          blue: "#228be6",
+          gray: "#495057",
+          pink: "#f06595",
+        },
+      }}
+    >
+      <AppBlock>
+        <ButtonGroup>
+          <Button size="large">BUTTON</Button>
+          <Button>BUTTON</Button>
+          <Button size="small">BUTTON</Button>
+        </ButtonGroup>
+        <ButtonGroup>
+          <Button color="gray" size="large" outline>
+            BUTTON
+          </Button>
+          <Button color="gray" outline>
+            BUTTON
+          </Button>
+          <Button color="gray" size="small" outline>
+            BUTTON
+          </Button>
+        </ButtonGroup>
+        <ButtonGroup>
+          <Button size="large" fullWidth>
+            BUTTON
+          </Button>
+          <Button color="gray" fullWidth>
+            BUTTON
+          </Button>
+          <Button color="pink" size="small" fullWidth>
+            BUTTON
+          </Button>
+        </ButtonGroup>
+      </AppBlock>
+    </ThemeProvider>
   );
 }
 
