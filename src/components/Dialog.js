@@ -10,6 +10,8 @@ const DarkBackground = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
 `;
 
 const DialogBlack = styled.div`

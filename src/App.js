@@ -110,6 +110,7 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import Button from "./components/Button";
+import Dialog from "./components/Dialog";
 
 const AppBlock = styled.div`
   width: 512px;
@@ -136,35 +137,44 @@ function App() {
         },
       }}
     >
-      <AppBlock>
-        <ButtonGroup>
-          <Button size="large">BUTTON</Button>
-          <Button>BUTTON</Button>
-          <Button size="small">BUTTON</Button>
-        </ButtonGroup>
-        <ButtonGroup>
-          <Button color="gray" size="large" outline>
-            BUTTON
-          </Button>
-          <Button color="gray" outline>
-            BUTTON
-          </Button>
-          <Button color="gray" size="small" outline>
-            BUTTON
-          </Button>
-        </ButtonGroup>
-        <ButtonGroup>
-          <Button size="large" fullWidth>
-            BUTTON
-          </Button>
-          <Button color="gray" fullWidth>
-            BUTTON
-          </Button>
-          <Button color="pink" size="small" fullWidth>
-            BUTTON
-          </Button>
-        </ButtonGroup>
-      </AppBlock>
+      <div>
+        <AppBlock>
+          <ButtonGroup>
+            <Button size="large">BUTTON</Button>
+            <Button>BUTTON</Button>
+            <Button size="small">BUTTON</Button>
+          </ButtonGroup>
+          <ButtonGroup>
+            <Button color="gray" size="large" outline>
+              BUTTON
+            </Button>
+            <Button color="gray" outline>
+              BUTTON
+            </Button>
+            <Button color="gray" size="small" outline>
+              BUTTON
+            </Button>
+          </ButtonGroup>
+          <ButtonGroup>
+            <Button size="large" fullWidth>
+              BUTTON
+            </Button>
+            <Button color="gray" fullWidth>
+              BUTTON
+            </Button>
+            <Button color="pink" size="small" fullWidth>
+              BUTTON
+            </Button>
+          </ButtonGroup>
+        </AppBlock>
+        <Dialog
+          title="정말로 삭제하시겠습니까?"
+          confirmText="삭제"
+          cancelText="취소"
+        >
+          데이터를 정말로 삭제하시겠습니까?
+        </Dialog>
+      </div>
     </ThemeProvider>
   );
 }
