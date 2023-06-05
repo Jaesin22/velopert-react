@@ -107,7 +107,7 @@
 // // 리액트의 Context API를 사용하면, 프로젝트 안에서 전역적으로 사용할 수 있는 값을 관리할 수 있다.
 // // 예시 : const UserDispatch = React.createContext(null);
 
-import React from "react";
+import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import Button from "./components/Button";
 import Dialog from "./components/Dialog";
@@ -127,6 +127,20 @@ const ButtonGroup = styled.div`
 `;
 
 function App() {
+  const [dialog, setDialog] = useState(false);
+  const onClick = () => {
+    setDialog(true);
+  };
+  const onConfirm = () => {
+    console.log("확인");
+    setDialog(false);
+  };
+
+  const onCancel = () => {
+    console.log("취소");
+    setDialog(false);
+  };
+
   return (
     <ThemeProvider
       theme={{
@@ -162,7 +176,7 @@ function App() {
             <Button color="gray" fullWidth>
               BUTTON
             </Button>
-            <Button color="pink" size="small" fullWidth>
+            <Button color="pink" fullWidth onClick={onClick}>
               BUTTON
             </Button>
           </ButtonGroup>
@@ -171,6 +185,9 @@ function App() {
           title="정말로 삭제하시겠습니까?"
           confirmText="삭제"
           cancelText="취소"
+          onConfirm={onConfirm}
+          onCancel={onCancel}
+          visible={dialog}
         >
           데이터를 정말로 삭제하시겠습니까?
         </Dialog>
