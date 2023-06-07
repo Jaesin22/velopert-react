@@ -1,198 +1,26 @@
-// import React, { useRef, useMemo, useCallback, useReducer } from "react";
-// import UserList from "./UserList";
-// import CreateUser from "./CreateUser";
-// import useInputs from "./hooks/useInputs";
-// import produce from "immer";
+import React from "react";
+import { createGlobalStyle } from "styled-components";
+import TodoTemplate from "./components/TodoTemplate";
+import TodoHead from "./components/TodoHead";
+import TodoList from "./components/TodoList";
+import TodoCreate from "./components/TodoCreate";
 
-// function countActiveUsers(users) {
-//   console.log("활성 사용자 수를 세는중...");
-//   return users.filter((user) => user.active).length;
-// }
-
-// const initialState = {
-//   inputs: {
-//     username: "",
-//     email: "",
-//   },
-//   users: [
-//     {
-//       id: 1,
-//       username: "velopert",
-//       email: "public.velopert@gmail.com",
-//       active: true,
-//     },
-//     {
-//       id: 2,
-//       username: "tester",
-//       email: "tester@example.com",
-//       active: false,
-//     },
-//     {
-//       id: 3,
-//       username: "liz",
-//       email: "liz@example.com",
-//       active: false,
-//     },
-//   ],
-// };
-
-// function reducer(state, action) {
-//   switch (action.type) {
-//     case "CREATE_USER":
-//       return produce(state, (draft) => {
-//         draft.users.push(action.user);
-//       });
-//     case "`TOGGLE_`USER":
-//       return produce(state, (draft) => {
-//         const user = draft.users.find((user) => user.id === action.id);
-//         user.active = !user.active;
-//       });
-//     case "REMOVE_USER":
-//       return produce(state, (draft) => {
-//         const index = draft.users.findIndex((user) => user.id === action.id);
-//         draft.users.splice(index, 1);
-//       });
-//     default:
-//       return state;
-//   }
-// }
-
-// // UserDispatch라는 이름으로 내보내준다.
-// export const UserDispatch = React.createContext(null);
-
-// function App() {
-//   const [state, dispatch] = useReducer(reducer, initialState);
-//   const nextId = useRef(4);
-//   const { users } = state;
-//   const [{ username, email }, onChange, reset] = useInputs({
-//     username: "",
-//     email: "",
-//   });
-
-//   const onCreate = useCallback(() => {
-//     dispatch({
-//       type: "CREATE_USER",
-//       user: {
-//         id: nextId.current,
-//         username,
-//         email,
-//       },
-//     });
-//     reset();
-//     nextId.current += 1;
-//   }, [username, email, reset]);
-
-//   const count = useMemo(() => countActiveUsers(users), [users]);
-
-//   return (
-//     <UserDispatch.Provider value={dispatch}>
-//       <CreateUser
-//         username={username}
-//         email={email}
-//         onChange={onChange}
-//         onCreate={onCreate}
-//       />
-//       <UserList users={users} />
-//       <div>활성사용자 수 : {count}</div>
-//     </UserDispatch.Provider>
-//   );
-// }
-
-// export default App;
-
-// // Context API를 사용한 전역 값 관리
-// // 특정 함수를 특정 컴포넌트를 거쳐서 원하는 컴포넌트에게 전달하는 작업은 리액트로 개발을 하다보면 자주 발생 할 수 있는 작업임.
-// // 그럴 땐, 리액트의 Context API 와 이전 섹션에서 배웠던 dispatch 를 함께 사용하면 이러한 복잡한 구조를 해결 할 수 있다.
-
-// // 리액트의 Context API를 사용하면, 프로젝트 안에서 전역적으로 사용할 수 있는 값을 관리할 수 있다.
-// // 예시 : const UserDispatch = React.createContext(null);
-
-import React, { useState } from "react";
-import styled, { ThemeProvider } from "styled-components";
-import Button from "./components/Button";
-import Dialog from "./components/Dialog";
-
-const AppBlock = styled.div`
-  width: 512px;
-  margin: 0 auto;
-  margin-top: 4rem;
-  border: 1px solid black;
-  padding: 1rem;
-`;
-
-const ButtonGroup = styled.div`
-  & + & {
-    margin-top: 1rem;
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: #e9ecef;
   }
 `;
 
 function App() {
-  const [dialog, setDialog] = useState(false);
-  const onClick = () => {
-    setDialog(true);
-  };
-  const onConfirm = () => {
-    console.log("확인");
-    setDialog(false);
-  };
-
-  const onCancel = () => {
-    console.log("취소");
-    setDialog(false);
-  };
-
   return (
-    <ThemeProvider
-      theme={{
-        palette: {
-          blue: "#228be6",
-          gray: "#495057",
-          pink: "#f06595",
-        },
-      }}
-    >
-      <div>
-        <AppBlock>
-          <ButtonGroup>
-            <Button size="large">BUTTON</Button>
-            <Button>BUTTON</Button>
-            <Button size="small">BUTTON</Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button color="gray" size="large" outline>
-              BUTTON
-            </Button>
-            <Button color="gray" outline>
-              BUTTON
-            </Button>
-            <Button color="gray" size="small" outline>
-              BUTTON
-            </Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button size="large" fullWidth>
-              BUTTON
-            </Button>
-            <Button color="gray" fullWidth>
-              BUTTON
-            </Button>
-            <Button color="pink" fullWidth onClick={onClick}>
-              BUTTON
-            </Button>
-          </ButtonGroup>
-        </AppBlock>
-        <Dialog
-          title="정말로 삭제하시겠습니까?"
-          confirmText="삭제"
-          cancelText="취소"
-          onConfirm={onConfirm}
-          onCancel={onCancel}
-          visible={dialog}
-        >
-          데이터를 정말로 삭제하시겠습니까?
-        </Dialog>
-      </div>
-    </ThemeProvider>
+    <>
+      <GlobalStyle />
+      <TodoTemplate>
+        <TodoHead />
+        <TodoList />
+        <TodoCreate />
+      </TodoTemplate>
+    </>
   );
 }
 
