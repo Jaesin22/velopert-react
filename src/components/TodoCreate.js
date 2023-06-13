@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { MdAdd } from "react-icons/md";
+import { useTodoDispatch } from "../TodoProvider";
+import { useTodoNextId } from "../TodoProvider";
 
 const CircleButton = styled.button`
   background: #38d9a9;
-  &: hover {
+  &:hover {
     background: #63e6be;
   }
-
-  &: active {
+  &:active {
     background: #20c997;
   }
 
   z-index: 5;
+  cursor: pointer;
   width: 80px;
   height: 80px;
   display: block;
   align-items: center;
-  justify-contents: center;
+  justify-content: center;
   font-size: 60px;
   position: absolute;
   left: 50%;
@@ -29,14 +31,14 @@ const CircleButton = styled.button`
   outline: none;
   display: flex;
   align-items: center;
-  justify-contents: center;
+  justify-content: center;
 
   transition: 0.125s all ease-in;
   ${(props) =>
     props.open &&
     css`
       background: #ff6b6b;
-      &: hover {
+      &:hover {
         background: #ff8787;
       }
       &:active {
@@ -77,16 +79,42 @@ const Input = styled.input`
 
 function TodoCreate() {
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+
+  const dispatch = useTodoDispatch();
+  const nextId = useTodoNextId();
+
   const onToggle = () => setOpen(!open);
+  const onChange = (e) => {
+    console.log(e.target.value);
+    setValue(e.target.value);
+  };
+  const onSubmit = (e) => {
+    e.preventDefault(); // 새로고침방지
+    dispatch({
+      type: "CREATE",
+      todo: {
+        id: nextId.current,
+        text: value,
+        done: false,
+      },
+    });
+    setValue("");
+    setOpen(false);
+    nextId.current += 1;
+  };
+  console.log(onChange);
 
   return (
-    <div>
+    <>
       {open && (
         <InsertFormPositioner>
-          <InsertForm>
+          <InsertForm onSubmit={onSubmit}>
             <Input
               autoFocus
-              placeholder="할 일을 입력 후, Enter키를 누르세용"
+              placeholder="할 일을 입력 후, Enter 를 누르세요"
+              onChange={onChange}
+              value={value}
             />
           </InsertForm>
         </InsertFormPositioner>
@@ -94,8 +122,8 @@ function TodoCreate() {
       <CircleButton onClick={onToggle} open={open}>
         <MdAdd />
       </CircleButton>
-    </div>
+    </>
   );
 }
 
-export default TodoCreate;
+export default React.memo(TodoCreate);

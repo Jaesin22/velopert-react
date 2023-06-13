@@ -34,12 +34,13 @@ function todoReducer(state, action) {
     case "REMOVE":
       return state.filter((todo) => todo.id !== action.id);
     default:
-      throw new Error(`Unhandled action type : ${acion.type}`);
+      throw new Error(`Unhandled action type : ${action.type}`);
   }
 }
 
 const TodoStateContext = createContext();
 const TodoDispatchContext = createContext();
+const TodoNextIdContext = createContext();
 
 export function TodoProvider({ children }) {
   const [state, dispatch] = useReducer(todoReducer, initialTodos);
@@ -47,16 +48,34 @@ export function TodoProvider({ children }) {
   return (
     <TodoStateContext.Provider value={state}>
       <TodoDispatchContext.Provider value={dispatch}>
-        {children}
+        <TodoNextIdContext.Provider value={nextId}>
+          {children}
+        </TodoNextIdContext.Provider>
       </TodoDispatchContext.Provider>
     </TodoStateContext.Provider>
   );
 }
 
 export function useTodoState() {
-  return useContext(TodoStateContext);
+  const context = useContext(TodoStateContext);
+  if (!context) {
+    throw new Error("Cannot find TodoProvider");
+  }
+  return context;
 }
 
 export function useTodoDispatch() {
-  return useContext(TodoDispatchContext);
+  const context = useContext(TodoDispatchContext);
+  if (!context) {
+    throw new Error("Cannot find TodoProvider");
+  }
+  return context;
+}
+
+export function useTodoNextId() {
+  const context = useContext(TodoNextIdContext);
+  if (!context) {
+    throw new Error("Cannot find TodoProvider");
+  }
+  return context;
 }
