@@ -86,7 +86,6 @@ function TodoCreate() {
 
   const onToggle = () => setOpen(!open);
   const onChange = (e) => {
-    console.log(e.target.value);
     setValue(e.target.value);
   };
   const onSubmit = (e) => {
@@ -103,7 +102,6 @@ function TodoCreate() {
     setOpen(false);
     nextId.current += 1;
   };
-  console.log(onChange);
 
   return (
     <>
