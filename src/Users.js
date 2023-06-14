@@ -1,31 +1,55 @@
-import React, { useState, useEffect } from "react";
+import React, { useReducer, useEffect } from "react";
 import axios from "axios";
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "LOADING":
+      return {
+        loading: true,
+        data: null,
+        error: null,
+      };
+    case "SUCCESS":
+      return {
+        loading: false,
+        data: action.data,
+        error: null,
+      };
+    case "ERROR":
+      return {
+        loading: true,
+        data: null,
+        error: action.error,
+      };
+    default:
+      throw new Error(`unhandled action type: ${action.type}`);
+  }
+}
+
 function Users() {
-  const [users, setUsers] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [state, dispatch] = useReducer(reducer, {
+    loading: false,
+    data: null,
+    error: null,
+  });
 
   const fetchUsers = async () => {
+    dispatch({ type: "LOADING" });
     try {
-      // 요청이 시작할 때에는 error와 users를 초기화 하고
-      setError(null);
-      setUsers(null);
-      // loading 상태를 true로 변경
-      setLoading(true);
       const response = await axios.get(
         "https://jsonplaceholder.typicode.com/users"
       );
-      setUsers(response.data);
+      dispatch({ type: "SUCCESS", data: response.data });
     } catch (e) {
-      setError(e);
+      dispatch({ type: "ERROR", error: e });
     }
-    setLoading(false);
   };
 
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  const { loading, data: users, error } = state; // state.data를 user 키워드로 조회
 
   if (loading) return <div>loading...</div>;
   if (error) return <div>Error !!!</div>;
